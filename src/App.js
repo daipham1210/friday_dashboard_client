@@ -3,6 +3,7 @@ import './App.scss';
 import background from "./assets/background.jpg";
 import WeatherWidget from "./widgets/weather";
 import CurrencyWidget from "./widgets/currency";
+import Todos from "./widgets/todos";
 import { DateTimeWidget } from "./widgets/datetime";
 import 'bootstrap/dist/css/bootstrap.css';
 import { getData } from "./api/request";
@@ -48,7 +49,9 @@ class App extends React.Component {
           <div className="row">
             <CurrencyWidget />
           </div>
-
+          <div className="row row-todo">
+            <Todos />
+          </div>
         </div>
       </div>
     );
