@@ -1,9 +1,8 @@
 import React from "react";
-
 class Todos extends React.Component {
   constructor(props) {
     super(props);
-
+    this.todoListRef = React.createRef(); 
     this.state = { 
       newTodo: '',
       todos: [
@@ -14,12 +13,9 @@ class Todos extends React.Component {
         { id: 4, title: 'abc', isChecked: false }
       ]
     };
-    this.onAddToDo = this.onAddToDo.bind(this);
   }
-
-  onAddToDo(e) {
-    if (e.charCode == 13) {
-      console.log(e.charCode);
+  onAddToDo = e => {
+    if (e.charCode === 13) {
       let todos = this.state.todos;
       let id = 0;
       if(todos && todos.length >= 1) {
@@ -27,12 +23,12 @@ class Todos extends React.Component {
       }
       const todo = { id: id, title: e.target.value, isChecked: false };
       todos.push(todo);
-      this.setState({ todos: todos});
-      this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+      this.setState({ todos }, () => {
+        this.todoListRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+      });
     }
   }
-
-  onCheckToDo(e, id) {
+  onCheckToDo = (e, id) => {
     e.stopPropagation();
     this.setState(prevState => ({
       todos: prevState.todos.map(obj => (
@@ -40,13 +36,11 @@ class Todos extends React.Component {
       )
     }));
   }
-
-  onRemoveTodo(id) {
+  onRemoveTodo = id => {
     this.setState(prevState => ({
-      todos: prevState.todos.filter(obj => obj.id != id)
+      todos: prevState.todos.filter(obj => obj.id !== id)
     }));
   }
-
   render() {
     return(
       <div className="todos">
@@ -54,7 +48,8 @@ class Todos extends React.Component {
           <input className="new-todo" onKeyPress={this.onAddToDo} 
                  placeholder="What needs to be done?"/>
         </div>
-        <ul className="todo-list">
+        <div className="todoWraper">
+        <ul className="todo-list" ref={this.todoListRef}>
           { 
             this.state.todos.map(todo => {
               return(
@@ -67,10 +62,8 @@ class Todos extends React.Component {
               </li>)
             })
           }
-          <li style={{ float:"left", clear: "both" }}
-             ref={(el) => { this.messagesEnd = el; }}>
-          </li>
         </ul>
+        </div>
         <div className="footer">
           <span className='todo-count'>1 item left</span>
           <div className='filter'>
@@ -84,5 +77,4 @@ class Todos extends React.Component {
     )
   }
 }
-
 export default Todos;
