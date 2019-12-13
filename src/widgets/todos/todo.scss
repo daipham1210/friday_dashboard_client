@@ -20,12 +20,15 @@
   opacity: 0.4;
   font-style: italic;
 }
+.todoWraper {
+  height: 250px;
+  overflow-y: scroll;
+}
 .todo-list {
   font-size: 24px;
   font-weight: 200;
-  height: 250px;
-  overflow: scroll;
-  overflow-x: hidden;
+  // height: 250px;
+  overflow: hidden;
   li {
     border-bottom: 1px solid #ededed;
     height: 50px;
@@ -107,7 +110,6 @@
   }
   margin-bottom: 0px;
 }
-
 .footer {
   position: relative;
   height: 50px;
